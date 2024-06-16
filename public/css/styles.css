@@ -1,6 +1,271 @@
-/******* Change Box Model ***************/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Georgia, 'Times New Roman', Times, serif;
+}
+
+img {
+  height: 100%;
+}
+
+.checkers {
+  display: none;
+}
+
+
+header a, .own-now {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-decoration: none;
+  color: black;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  color: #094074;
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+}
+
+#top-header {
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+
+#top-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#top-header a {
+  text-decoration: none;
+  color: #007BFF;
+  transition: color 0.3s ease;
+}
+
+#top-header a:hover {
+  color: #0056b3;
+}
+
+#top-header  {
+  color: #333;
+}
+
+nav a {
+  color: #ffffff;
+  font-weight: bold;
+  padding: 8px;
+  text-decoration: none; 
+  transition: color 0.3s ease; 
+}
+
+nav a:hover {
+  color: #7f32be; 
+}
+
+nav ul li {
+  list-style: none;
+}
+
+
+nav > ul {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 1em;
+  font-family: helvetica, Arial, sans-serif;
+}
+
+nav {
+  background-color: #094074;
+}
+
+nav > ul > li:hover {
+  text-decoration: underline;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+
+.hero-grid  img {
+  width: 100%;
+  height: auto;
+  justify-self: center;
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+}
+
+.hero-grid div {
+  background-color: rgba(255, 255, 255, 0.581);
+  color: #000000;
+  padding-left: 1em;
+  padding-right: 1em;
+  width: 90%;
+  grid-column: 1/2;
+  grid-row: 1/-1;
+}
+
+.hero-grid .own-now {
+  background-color:#1E90FF;
+  border-radius: 18px;
+  color: black;  
+  text-align: center;
+  padding: 1em;
+  transition: background-color 0.3s ease; 
+}
+
+.hero-grid .own-now:hover {
+  background-color: #7f8c8d; 
+  color: white; 
+}
+
+.extra-grid ul li{
+  padding: 6px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    align-items: baseline;
+}
+
+footer a {
+  color: #ffffff;
+  font-weight: bold;
+ 
+  text-decoration: none;
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.upgrades {
+  text-align: center;
+}
+
+.upgrade {
+  background-color:dodgerblue;
+  border: 2px solid gray;
+  min-height: 5em;
+  text-align: center;
+  margin: .5em;
+  height: 60%;
+}
+
+.upgrades h2 {
+  text-align: left;
+}
+
+.upgrade img {
+  padding: .6em;
+}
+
+footer {
+  padding: 1em;
+  padding-bottom: .2em;
+}
+
+@media screen and (min-width: 700px) {
+  body {
+    background-image: url("/images/site/checkerboard.jpg");
+    background-repeat:repeat;
+    background-size: 35em 35em;
+  }
+
+  #wrapper {
+    background-color: white;
+    border-radius: 1.2em;
+    border: 2px solid cornflowerblue;
+    width: 80%;
+    margin: auto;
+  }
+  
+  main, nav {
+    margin: 1em;
+  }
+
+  main .message {
+  font-family: 'Helvetica', Arial, sans-serif;
+  font-weight: bold;
+  color: #382827; 
+  font-size: 1.2em; 
+  text-align: center; 
+   height: 6em;
+  }
+
+  .extra-grid {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+
+  }
+
+}
+
+@media screen and (max-width: 700px) {
+  main .message {
+    color: #e74c3c; 
+    text-align: center; 
+    font-weight: 700; 
+    height: 7em;  
+  }
+  
+}
+
+@media screen and (max-width: 300px) {
+  nav > ul {
+    flex-direction: column; 
+    align-items: center; 
+  }
+
+  nav > ul > li {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 250px) {
+  .upgrade-grid {
+    grid-template-columns: 1fr; 
+  }
+}
+
+@media (max-width: 600px) {
+  #top-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #top-header {
+    margin-top: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  #top-header {
+    display: none;
+  }
 }
