@@ -57,4 +57,52 @@ Util.buildClassificationGrid = async function(data){
     return grid
   }
 
+  /* **************************************
+* Build the vehicle detail view HTML
+* ************************************ */
+Util.buildVehicleGrid = async function (data) {
+  let grid;
+  let vehicle = data[0];
+  if (data) {
+    grid = '<div id="singleVehicleWrapper">';
+    grid +=
+      '<img src="' +
+      vehicle.inv_image +
+      '" alt="Image of ' +
+      vehicle.inv_year +
+      vehicle.inv_make +
+      vehicle.inv_model +
+      '">';
+    grid += '<ul id="singleVehicleDetails">';
+    grid +=
+      "<li><h2>" +
+      vehicle.inv_make +
+      " " +
+      vehicle.inv_model +
+      " Details</h2></li>";
+    grid +=
+      "<li><strong>Price: </strong>$" +
+      new Intl.NumberFormat("en-US").format(vehicle.inv_price) +
+      "</li>";
+    grid +=
+      "<li><strong>Description: </strong>" + vehicle.inv_description + "</li>";
+    grid +=
+      "<li><strong>Miles: </strong>" +
+      new Intl.NumberFormat("en-US").format(vehicle.inv_miles) +
+      "</li>";
+    grid += "</ul>";
+    grid += "</div>";
+  } else {
+    grid += '<p class="notice">Sorry, no matching vehicle could be found.</p>';
+  }
+  return grid;
+};
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = (fn) => (req, res, next) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
+
 module.exports = Util
