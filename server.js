@@ -1,5 +1,6 @@
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const utilities = require("./utilities/")
 
 /* ******************************************
  * This server.js file is the primary file of the 
@@ -32,6 +33,42 @@ app.get("/", baseController.buildHome)
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
+
+// Custom error trigger route
+app.get("/trigger-error", (req, res, next) => {
+  const err = new Error("Server Error");
+  err.status = 500;
+  next(err);
+})
+
+// File Not Found Route - must be last route in list
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
+
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav();
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+  
+  let title, message;
+  if (err.status == 404) {
+    title = "404 - Page Not Found";
+    message = err.message;
+  } else {
+    title = "Server Error";
+    message = "Oh no! There was a crash. Maybe try a different route?";
+  }
+  
+  res.render("errors/error", {
+    title: title,
+    message,
+    nav,
+  });
+});
 
 /* ***********************
  * Local Server Information

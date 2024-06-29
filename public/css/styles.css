@@ -162,7 +162,6 @@ footer a {
   grid-template-columns: 1fr 1fr;
 }
 
-/* Styles for the inventory display container */
 #inv-display {
   display: grid;
   gap: 1em; 
@@ -171,7 +170,6 @@ footer a {
   justify-content: center; 
 }
 
-/* Styles for each inventory item */
 #inv-display li {
   height: auto; 
   width: 100%;
@@ -183,7 +181,6 @@ footer a {
   text-align: center; 
 }
 
-/* Styles for images within inventory items */
 #inv-display li img {
   height: auto; 
   max-height: 10em;
@@ -191,15 +188,14 @@ footer a {
   max-width: 100%; 
 }
 
-/* Add hover effect */
 #inv-display li:hover {
   transform: translateY(-5px);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
 }
 
-/* Add hover effect to images */
+
 #inv-display li:hover img {
-  transform: scale(1.1); /* Enlarge image on hover */
+  transform: scale(1.1); 
 }
 
 .upgrades {
