@@ -98,6 +98,17 @@ nav > ul > li:hover {
   text-decoration: underline;
 }
 
+.notice li{
+  list-style: none;
+  padding: 10px;
+  background-color: #d6e9f9; 
+  border: 1px solid #bce8f1; 
+  color: #31708f; 
+  border-radius: 4px; 
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease; 
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -139,6 +150,64 @@ nav > ul > li:hover {
 
 .extra-grid ul li{
   padding: 6px;
+}
+
+input {
+  background-color: #faf8f8;
+}
+
+input:required:invalid, input:focus:invalid {
+  background-color: #faf8f8; 
+ }
+
+ input:required:valid {
+  background-color: #faf8f8;
+ }
+
+ .form {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.form--fieldset {
+  border: 1px solid #ccc;
+  background-color: #3a508d;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #e0e1e2;
+  color: #0c0c0c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #7885c2;
+}
+
+.form--fieldset p {
+  margin-top: 10px;
+  font-size: 14px;
 }
 
 footer {

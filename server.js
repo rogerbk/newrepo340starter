@@ -17,13 +17,15 @@ const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require('./database/')
 const flash = require('connect-flash')
+const accountRoute = require("./routes/accountRoute")
+const bodyParser = require("body-parser")
 
 /* ***********************
  * View Engine and Templates
  *************************/
 app.set("view engine", "ejs")
 app.use(expressLayouts)
-app.set("layout", "./layouts/layout") // not at views root
+app.set("layout", "./layouts/layout")
 
 // Session Middleware
 app.use(session({
@@ -44,6 +46,9 @@ app.use(function(req, res, next){
   next()
 })
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 /* ***********************
  * Routes
  *************************/
@@ -56,6 +61,8 @@ app.get("/", baseController.buildHome)
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
+
+app.use("/account", accountRoute)
 
 // Custom error trigger route
 app.get("/trigger-error", (req, res, next) => {
