@@ -1,0 +1,17 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+  <% } else {
+    res.redirect('/')
+    } %>
+  
+  <%- messages() %>
+  
+  <div class="management-links">
+    <div><a href="/inv/addclass">Add New Classification</a></div>
+    <div><a href="/inv/addvehicle">Add New Vehicle</a></div>
+  </div>
+  <div class="manage-inventory">
+    <table id="inventoryDisplay"></table>
+    <noscript>JavaScript must be enabled to use this page.</noscript>
+  </div>
+  <script src="../../js/inventory.js"></script>

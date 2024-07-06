@@ -35,18 +35,10 @@ h1, h2, h3, h4 {
   padding: 10px 20px;
   background-color: #f8f8f8;
   border-bottom: 1px solid #ddd;
-}
-
-#top-header {
   text-decoration: none;
   font-size: 1.5em;
   font-weight: bold;
   color: #333;
-}
-
-#top-header {
-  display: flex;
-  align-items: center;
   gap: 10px;
 }
 
@@ -60,9 +52,6 @@ h1, h2, h3, h4 {
   color: #0056b3;
 }
 
-#top-header  {
-  color: #333;
-}
 
 nav a {
   color: #ffffff;
@@ -70,6 +59,7 @@ nav a {
   padding: 8px;
   text-decoration: none; 
   transition: color 0.3s ease; 
+  background-color: #094074; 
 }
 
 nav a:hover {
@@ -113,6 +103,7 @@ nav > ul > li:hover {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
+  gap: 1em;
 }
 
 
@@ -154,14 +145,17 @@ nav > ul > li:hover {
 
 input {
   background-color: #faf8f8;
+  color: #000000;
 }
 
 input:required:invalid, input:focus:invalid {
   background-color: #faf8f8; 
+  color: #000000;
  }
 
  input:required:valid {
   background-color: #faf8f8;
+  color: #000000;
  }
 
  .form {
@@ -174,6 +168,7 @@ input:required:invalid, input:focus:invalid {
   background-color: #3a508d;
   padding: 20px;
   margin-bottom: 20px;
+  color: white; 
 }
 
 label {
@@ -203,11 +198,15 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
   background-color: #7885c2;
+  color: #ffffff;
 }
 
 .form--fieldset p {
-  margin-top: 10px;
-  font-size: 14px;
+  border: 1px solid #ccc;
+  background-color: #3a508d;
+  padding: 20px;
+  margin-bottom: 20px;
+  color: white;
 }
 
 
@@ -217,6 +216,7 @@ input[type="submit"]:hover {
   padding: 20px;
   background-color: #3a508d;
   border-radius: 5px;
+  color: white;
 }
 
 #registerForm fieldset {
@@ -247,7 +247,7 @@ input[type="submit"]:hover {
   padding: 10px;
   margin-top: 20px;
   background-color: #e6e9ec;
-  color: 0c0c0c;
+  color: #0c0c0c;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -290,6 +290,7 @@ footer a {
 .upgrade-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 1em; 
 }
 
 #inv-display {
@@ -328,6 +329,41 @@ footer a {
   transform: scale(1.1); 
 }
 
+
+#classificationList {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  color: #0056B3;
+}
+
+#classificationList option {
+  color: #0056B3; 
+}
+
+.management-links {
+  margin-bottom: 20px;
+}
+.management-links div {
+  margin-bottom: 10px;
+}
+.management-links a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+}
+.management-links a:hover {
+  background-color: #e0e0e0;
+}
+
+
 .upgrades {
   text-align: center;
 }
@@ -339,6 +375,7 @@ footer a {
   text-align: center;
   margin: .5em;
   height: 60%;
+  color: white;
 }
 
 .upgrades h2 {

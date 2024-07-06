@@ -98,6 +98,21 @@ Util.buildVehicleGrid = async function (data) {
   return grid;
 };
 
+
+Util.getClassSelect = async function (req, res, next) {
+  let data = await invModel.getClassifications();
+  let list = "";
+  data.rows.forEach((row) => {
+    list +=
+      '<option value="' +
+      row.classification_id +
+      '">' +
+      row.classification_name +
+      "</option>";
+  });
+  return list;
+};
+
 /* ****************************************
  * Middleware For Handling Errors
  * General Error Handling

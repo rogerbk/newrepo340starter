@@ -48,10 +48,11 @@ app.use(function(req, res, next){
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 
-/* ***********************
+/* ****************
  * Routes
- *************************/
+ ******************/
 app.use(static)
 app.get("/", baseController.buildHome)
 app.use("/inv", inventoryRoute)
@@ -108,7 +109,7 @@ const port = process.env.PORT
 const host = process.env.HOST
 
 /* ***********************
- * Log statement to confirm server operation
+ * Log statement to confirm server
  *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
