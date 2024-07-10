@@ -5,8 +5,21 @@ const { handleErrors } = require("../utilities")
 const regValidate = require('../utilities/account-validation')
 const Util = require("../utilities"); 
 
+router.get("/", Util.checkLogin, handleErrors(accountController.buildAccount));
+
+// Route to build default account view
+router.get("/account", Util.checkLogin, handleErrors(accountController.buildAccount));
+
 // deliver login view
 router.get("/login", handleErrors(accountController.buildLogin));
+
+// process login attempt
+router.post(
+  "/login",
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  handleErrors(accountController.accountLogin)
+)
 
 // deliver registration view
 router.get("/register", handleErrors(accountController.buildRegister))
@@ -18,20 +31,4 @@ router.post(
     regValidate.checkRegData,
     handleErrors(accountController.registerAccount)
   )
-// process login
-router.post(
-    '/login',
-    regValidate.loginRules(),
-    regValidate.checkLoginData,
-    handleErrors(accountController.loginAccount)
-)
-
-// Process the login attempt
-router.post(
-    "/login",
-    (req, res) => {
-      res.status(200).send('login process')
-    }
-  )
-  
 module.exports = router

@@ -16,6 +16,7 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require('./database/')
+const cookieParser = require("cookie-parser")
 const flash = require('connect-flash')
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
@@ -48,6 +49,12 @@ app.use(function(req, res, next){
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// Use cookie parser
+app.use(cookieParser())
+
+// Use token validation
+app.use(utilities.checkJWTToken)
 
 /* ****************
  * Routes
