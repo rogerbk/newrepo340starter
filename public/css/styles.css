@@ -134,6 +134,20 @@ nav > ul > li:hover {
   transition: background-color 0.3s ease; 
 }
 
+.manage-inventory {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.manage-inventory h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
 .hero-grid .own-now:hover {
   background-color: #7f8c8d; 
   color: white; 
@@ -169,6 +183,12 @@ input:required:invalid, input:focus:invalid {
   padding: 20px;
   margin-bottom: 20px;
   color: white; 
+}
+
+.form--fieldset label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 label {
@@ -344,6 +364,21 @@ footer a {
   color: #0056B3; 
 }
 
+#inventoryDisplay th, #inventoryDisplay td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+#inventoryDisplay th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+#inventoryDisplay tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
 .management-links {
   margin-bottom: 20px;
 }
@@ -460,6 +495,18 @@ footer {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  @media (max-width: 767px) { 
+    .management-links {
+        flex-direction: column; 
+        align-items: center;
+    }
+  
+    .management-links a {
+        width: auto; 
+    }
+  }
+  
 
   #top-header {
     margin-top: 10px;

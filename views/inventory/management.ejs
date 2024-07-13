@@ -10,8 +10,18 @@
     <div><a href="/inv/addclass">Add New Classification</a></div>
     <div><a href="/inv/addvehicle">Add New Vehicle</a></div>
   </div>
-  <div class="manage-inventory">
-    <table id="inventoryDisplay"></table>
-    <noscript>JavaScript must be enabled to use this page.</noscript>
+
+ <h2>Manage Inventory</h2>
+<div class="manage-inventory">
+  <!-- <p>Select a classification to view inventory:</p> -->
+  <!-- CLASSIFICATION DROP DOWN -->
+  <div class="form--fieldset">
+    <label for="classification_id">Select a classification to view inventory:</label>
+    <select name="classification_id" id="classificationList">
+      <%- classSelect %> <!-- Aquí se insertan las opciones -->
+    </select>
   </div>
-  <script src="../../js/inventory.js"></script>
+  <table id="inventoryDisplay"></table>
+  <noscript>JavaScript must be enabled to use this page.</noscript>
+</div>
+<script src="../../js/inventory.js"></script>
