@@ -148,7 +148,7 @@ async function accountLogin(req, res) {
         secure: process.env.NODE_ENV === "production", 
         maxAge: 3600 * 1000 
       });
-      return res.redirect("/account/");  // Changed from "/account/account" to "/account/"
+      return res.redirect("/account/"); 
     } else {
       req.flash("notice", "Please check your credentials and try again.");
       res.status(400).render("account/login", {
@@ -172,11 +172,123 @@ async function accountLogin(req, res) {
 
 async function buildAccount(req, res, next) {
   let nav = await utilities.getNav();
+  const accountData = res.locals.accountData;
+  
   res.render("account/account", {
     title: "Account Management",
     nav,
     errors: null,
+    accountData
   });
 }
 
-module.exports = { buildAccount, accountLogin, buildLogin, buildRegister, registerAccount, loginAccount }
+async function buildAccountUpdate(req, res, next) {
+  const accountId = parseInt(req.params.accountId)
+  let nav = await utilities.getNav()
+  const accountData = res.locals.accountData
+
+  if (accountId !== accountData.account_id) {
+    req.flash("notice", "You don't have permission to update this account.")
+    return res.redirect("/account/")
+  }
+
+  res.render("account/update-account", {
+    title: "Update Account",
+    nav,
+    errors: null,
+    accountData
+  })
+}
+
+async function updateAccount(req, res) {
+  let nav = await utilities.getNav()
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+  const accountData = await accountModel.getAccountById(account_id)
+
+  if (account_id != res.locals.accountData.account_id) {
+    req.flash("notice", "You don't have permission to update this account.")
+    return res.redirect("/account/")
+  }
+
+  const updateResult = await accountModel.updateAccount(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id
+  )
+
+  if (updateResult) {
+    const updatedAccountData = await accountModel.getAccountById(account_id)
+    req.flash("notice", "The account information has been updated.")
+    res.render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+      accountData: updatedAccountData
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      accountData: { ...accountData, account_firstname, account_lastname, account_email }
+    })
+  }
+}
+
+async function changePassword(req, res) {
+  let nav = await utilities.getNav()
+  const { account_password, account_id } = req.body
+
+  if (account_id != res.locals.accountData.account_id) {
+    req.flash("notice", "You don't have permission to change this account's password.")
+    return res.redirect("/account/")
+  }
+
+  let hashedPassword
+  try {
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", "Sorry, there was an error processing the password.")
+    res.status(500).render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      accountData: res.locals.accountData
+    })
+    return
+  }
+
+  const changeResult = await accountModel.changePassword(hashedPassword, account_id)
+
+  if (changeResult) {
+    const updatedAccountData = await accountModel.getAccountById(account_id)
+    req.flash("notice", "The password has been updated.")
+    res.render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+      accountData: updatedAccountData
+    })
+  } else {
+    req.flash("notice", "Sorry, the password update failed.")
+    res.status(501).render("account/update-account", {
+      title: "Update Account",
+      nav,
+      errors: null,
+      accountData: res.locals.accountData
+    })
+  }
+}
+
+/* ****************************************
+*  Process logout
+* *************************************** */
+async function logoutAccount(req, res) {
+  res.clearCookie("jwt")
+  req.flash("notice", "You have been logged out.")
+  res.redirect("/")
+}
+
+module.exports = { logoutAccount, changePassword,updateAccount,buildAccountUpdate, buildAccount, accountLogin, buildLogin, buildRegister, registerAccount, loginAccount }

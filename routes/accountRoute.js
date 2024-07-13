@@ -1,19 +1,16 @@
 const express = require("express")
 const router = new express.Router()
 const accountController = require("../controllers/accountController")
-const { handleErrors } = require("../utilities")
+const { handleErrors, checkLogin } = require("../utilities")
 const regValidate = require('../utilities/account-validation')
-const Util = require("../utilities"); 
-
-router.get("/", Util.checkLogin, handleErrors(accountController.buildAccount));
 
 // Route to build default account view
-router.get("/account", Util.checkLogin, handleErrors(accountController.buildAccount));
+router.get("/", checkLogin, handleErrors(accountController.buildAccount))
 
-// deliver login view
-router.get("/login", handleErrors(accountController.buildLogin));
+// Deliver login view
+router.get("/login", handleErrors(accountController.buildLogin))
 
-// process login attempt
+// Process login attempt
 router.post(
   "/login",
   regValidate.loginRules(),
@@ -21,14 +18,39 @@ router.post(
   handleErrors(accountController.accountLogin)
 )
 
-// deliver registration view
+// Deliver registration view
 router.get("/register", handleErrors(accountController.buildRegister))
 
-// process registration
+// Process registration
 router.post(
-    '/register',
-    regValidate.registrationRules(),
-    regValidate.checkRegData,
-    handleErrors(accountController.registerAccount)
-  )
+  '/register',
+  regValidate.registrationRules(),
+  regValidate.checkRegData,
+  handleErrors(accountController.registerAccount)
+)
+
+// Deliver account update view
+router.get("/update/:accountId", checkLogin, handleErrors(accountController.buildAccountUpdate))
+
+// Process account update
+router.post(
+  "/update",
+  checkLogin,
+  regValidate.updateAccountRules(),
+  regValidate.checkUpdateData,
+  handleErrors(accountController.updateAccount)
+)
+
+// Process password change
+router.post(
+  "/change-password",
+  checkLogin,
+  regValidate.changePasswordRules(),
+  regValidate.checkPasswordData,
+  handleErrors(accountController.changePassword)
+)
+
+// Logout route
+router.get("/logout", handleErrors(accountController.logoutAccount))
+
 module.exports = router

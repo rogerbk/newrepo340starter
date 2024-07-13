@@ -178,4 +178,21 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+ Util.checkEmployeeAdmin = (req, res, next) => {
+  if (res.locals.loggedin) {
+    const token = req.cookies.jwt
+    const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    if (decodedToken.account_type === "Employee" || decodedToken.account_type === "Admin") {
+      next()
+    } else {
+      req.flash("notice", "You don't have permission to access this page.")
+      return res.redirect("/account/login")
+    }
+  } else {
+    req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+}
+
+
 module.exports = Util;

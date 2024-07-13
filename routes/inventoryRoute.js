@@ -4,56 +4,30 @@ const router = new express.Router()
 const invController = require("../controllers/invController");
 const utilities = require("../utilities")
 const invValidate = require("../utilities/inventory-validation")
-const { handleErrors, } = require("../utilities");
+const { handleErrors, checkEmployeeAdmin } = require("../utilities");
 
-// Build inventory management table inventory view
-router.get(
-    "/getInventory/:classification_id",
-    utilities.handleErrors(invController.getInventoryJSON)
-  );
-  
-  router.get("/", handleErrors(invController.buildManagementView));
-  
-  // Route to build add classification view
-  router.get("/addclass", handleErrors(invController.buildAddclass));
-  
-  // Route to build add vehicle view
-  router.get("/addvehicle", handleErrors(invController.buildAddvehicle));
-  
-  // Process the new classification data
-  router.post(
-    "/addclass",
-    invValidate.classRules(),
-    invValidate.checkClassData,
-    handleErrors(invController.addClass)
-  );
-  
-  // Process the new vehicle data
-  router.post(
-    "/addvehicle",
-    invValidate.vehicleRules(),
-    invValidate.checkVehicleData,
-    handleErrors(invController.addVehicle)
-  );
-
-  router.post(
-    "/update",
-    invValidate.vehicleRules(),
-    invValidate.checkVehicleData,
-    handleErrors(invController.updateVehicle)
-  );
-
-// Route to build inventory by classification view
 router.get("/type/:classificationId", invController.buildByClassificationId);
-
-//Route to build inventory by vehicle view
 router.get("/detail/:invId", handleErrors(invController.buildByInvId));
 
-router.get("/edit/:inv_id", handleErrors(invController.buildVehicleEdit));
+// Routes that require employee/admin access
+router.get("/", checkEmployeeAdmin, handleErrors(invController.buildManagementView));
 
-// Route to build delete confirmation view
-router.get("/delete/:inv_id", handleErrors(invController.buildVehicleDeleteConfirm));
+router.get("/getInventory/:classification_id", checkEmployeeAdmin, handleErrors(invController.getInventoryJSON));
 
-router.post("/delete",handleErrors(invController.deleteVehicle));
+router.get("/addclass", checkEmployeeAdmin, handleErrors(invController.buildAddclass));
+
+router.get("/addvehicle", checkEmployeeAdmin, handleErrors(invController.buildAddvehicle));
+
+router.post("/addclass", checkEmployeeAdmin, invValidate.classRules(), invValidate.checkClassData, handleErrors(invController.addClass));
+
+router.post("/addvehicle", checkEmployeeAdmin, invValidate.vehicleRules(), invValidate.checkVehicleData, handleErrors(invController.addVehicle));
+
+router.post("/update", checkEmployeeAdmin, invValidate.vehicleRules(), invValidate.checkVehicleData, handleErrors(invController.updateVehicle));
+
+router.get("/edit/:inv_id", checkEmployeeAdmin, handleErrors(invController.buildVehicleEdit));
+
+router.get("/delete/:inv_id", checkEmployeeAdmin, handleErrors(invController.buildVehicleDeleteConfirm));
+
+router.post("/delete", checkEmployeeAdmin, handleErrors(invController.deleteVehicle));
 
 module.exports = router;
