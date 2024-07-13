@@ -51,4 +51,9 @@ router.get("/detail/:invId", handleErrors(invController.buildByInvId));
 
 router.get("/edit/:inv_id", handleErrors(invController.buildVehicleEdit));
 
+// Route to build delete confirmation view
+router.get("/delete/:inv_id", handleErrors(invController.buildVehicleDeleteConfirm));
+
+router.post("/delete",handleErrors(invController.deleteVehicle));
+
 module.exports = router;
