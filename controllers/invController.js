@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const reviewModel = require("../models/review-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -28,20 +29,32 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build inventory detail view
  * ************************** */
 invCont.buildByInvId = async function (req, res, next) {
-  const inv_id = req.params.invId;
-  const data = await invModel.getInventoryByInvId(inv_id);
-  const grid = await utilities.buildVehicleGrid(data);
-  let nav = await utilities.getNav();
-  const vehicleMake = data[0].inv_make;
-  const vehicleModel = data[0].inv_model;
-  const vehicleYear = data[0].inv_year;
-  res.render("./inventory/vehicle", {
-    title: vehicleYear + " " + vehicleMake + " " + vehicleModel,
-    nav,
-    errors: null,
-    grid,
-  });
-};
+  try {
+    const inv_id = req.params.invId
+    const data = await invModel.getInventoryByInvId(inv_id)
+    if (!data || data.length === 0) {
+      next(new Error("Vehicle not found"))
+      return
+    }
+    const vehicle = data[0] // Get the first (and should be only) vehicle from the data
+    const reviews = await reviewModel.getReviewsByVehicle(inv_id)
+    const grid = await utilities.buildVehicleGrid(data)
+    let nav = await utilities.getNav()
+    const vehicleMake = vehicle.inv_make
+    const vehicleModel = vehicle.inv_model
+    const vehicleYear = vehicle.inv_year
+    res.render("./inventory/vehicle", {
+      title: vehicleYear + " " + vehicleMake + " " + vehicleModel,
+      nav,
+      errors: null,
+      grid,
+      reviews,
+      vehicle, // Pass the vehicle data to the view
+    })
+  } catch (error) {
+    next(error)
+  }
+}
 
 /* ***************************
  *  Deliver management view

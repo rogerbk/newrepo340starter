@@ -1,10 +1,32 @@
 <% if (title) { %>
-    <h1><%= title %></h1>
-  <% } else {
-    res.redirect('/')
-    } %>
+  <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+  } %>
 
-    <%# messages() %>
-  
-  <!-- display the contents of the page -->
-  <%- grid %>
+<%- messages() %>
+
+<!-- display the contents of the page -->
+<%- grid %>
+
+<h2>Reviews</h2>
+<% if (reviews && reviews.length > 0) { %>
+<% reviews.forEach(review => { %>
+  <div class="review">
+    <h3><%= review.account_firstname %> <%= review.account_lastname %></h3>
+    <p>Rating: <%= review.review_rating %> / 5</p>
+    <p><%= review.review_text %></p>
+    <p>Date: <%= new Date(review.review_date).toLocaleDateString() %></p>
+  </div>
+<% }) %>
+<% } else { %>
+<p>No reviews yet.</p>
+<% } %>
+
+<% if (locals.loggedin && vehicle) { %>
+  <a href="/inv/review/add/<%= vehicle.inv_id %>">Add a Review</a>
+<% } else if (locals.loggedin) { %>
+  <p>Unable to add review at this time.</p>
+<% } else { %>
+  <p>Please <a href="/account/login">log in</a> to leave a review.</p>
+<% } %>

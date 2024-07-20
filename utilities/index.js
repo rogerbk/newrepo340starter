@@ -155,29 +155,6 @@ Util.checkLogin = (req, res, next) => {
   }
 }
 
-/* ****************************************
-* Middleware to check token validity
-**************************************** */
-Util.checkJWTToken = (req, res, next) => {
-  if (req.cookies.jwt) {
-   jwt.verify(
-    req.cookies.jwt,
-    process.env.ACCESS_TOKEN_SECRET,
-    function (err, accountData) {
-     if (err) {
-      req.flash("Please log in")
-      res.clearCookie("jwt")
-      return res.redirect("/account/login")
-     }
-     res.locals.accountData = accountData
-     res.locals.loggedin = 1
-     next()
-    })
-  } else {
-   next()
-  }
- }
-
  Util.checkEmployeeAdmin = (req, res, next) => {
   if (res.locals.loggedin) {
     const token = req.cookies.jwt
@@ -194,5 +171,4 @@ Util.checkJWTToken = (req, res, next) => {
   }
 }
 
-
-module.exports = Util;
+module.exports = Util

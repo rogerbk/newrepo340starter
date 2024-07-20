@@ -1,0 +1,37 @@
+<% if (title) { %>
+    <h1><%= title %></h1>
+  <% } else {
+    res.redirect('/')
+  } %>
+  
+  <%- messages() %>
+  
+  <% if (errors) { %>
+    <ul class="notice">
+   <% errors.array().forEach(error => { %>
+     <li><%= error.msg %></li>
+  <%  }) %>
+   </ul>
+  <% } %>
+  
+  <h2>Add Review for <%= vehicle.inv_make %> <%= vehicle.inv_model %></h2>
+  
+  <form action="/inv/review/add" method="post">
+    <fieldset>
+      <label for="review_rating">Rating:</label>
+      <select name="review_rating" id="review_rating" required>
+        <option value="1">1 Star</option>
+        <option value="2">2 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="5">5 Stars</option>
+      </select>
+  
+      <label for="review_text">Review:</label>
+      <textarea name="review_text" id="review_text" required></textarea>
+  
+      <input type="hidden" name="inv_id" value="<%= inv_id %>">
+  
+      <button type="submit">Submit Review</button>
+    </fieldset>
+  </form>
